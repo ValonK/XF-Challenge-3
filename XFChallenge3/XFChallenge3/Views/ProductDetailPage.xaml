@@ -1,0 +1,233 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             mc:Ignorable="d"
+             xmlns:font="clr-namespace:XFChallenge3.Helpers"
+             xmlns:pancakeView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             xmlns:controls="clr-namespace:XFChallenge3.Controls"
+             x:Class="XFChallenge3.Views.ProductDetailPage"
+             x:Name="Root"
+             BackgroundColor="White">
+
+    <ScrollView Scrolled="ScrollView_Scrolled"
+                x:Name="xScrollView">
+
+        <Grid x:Name="MainGrid" RowSpacing="0" Margin="0,0,0,100">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="500" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <forms:CachedImage x:Name="CarouselContainer"
+			                   Grid.Row="0"
+			                   Aspect="AspectFill"
+			                   BitmapOptimizations="True"
+			                   DownsampleUseDipUnits="True"
+			                   FadeAnimationEnabled="True"
+			                   HorizontalOptions="FillAndExpand"
+			                   Source="{Binding Product.Images[0].Source}">
+                <forms:CachedImage.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Source={x:Reference Root}, Path=BindingContext.ImageSelectedCommand}" 
+                                          CommandParameter="{Binding Product.Images[0]}" />
+                </forms:CachedImage.GestureRecognizers>
+            </forms:CachedImage>
+
+            <Grid x:Name="OpacityGrid"
+			      Grid.Row="0"
+			      BackgroundColor="White"
+			      Opacity="0">
+            </Grid>
+
+
+            <Grid Grid.Row="0"
+			      HeightRequest="50"
+			      HorizontalOptions="Start"
+			      VerticalOptions="Start"
+                  Margin="{OnPlatform Android='0,15,0,0', iOS='0,0,0,0'}"
+			      WidthRequest="50">
+
+                <Label Margin="0,15,0,0"
+				       FontSize="30"
+				       HorizontalTextAlignment="Center"
+				       FontFamily="{StaticResource MaterialFontFamily}"
+				       Text="{x:Static font:IconFont.ArrowLeft}"
+				       TextColor="Black"
+				       VerticalTextAlignment="Center" />
+
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding BackCommand}" />
+                </Grid.GestureRecognizers>
+            </Grid>
+
+            <Grid Grid.Row="0"
+			      HeightRequest="50"
+			      HorizontalOptions="End"
+				  Margin="{OnPlatform Android='0,15,0,0', iOS='0,0,0,0'}"
+			      VerticalOptions="Start"
+			      WidthRequest="50">
+
+                <Label Margin="0,15,0,0"
+				       FontSize="25"
+				       HorizontalTextAlignment="Center"
+				       FontFamily="{StaticResource MaterialFontFamily}"
+				       Text="{x:Static font:IconFont.Share}"
+				       TextColor="Black"
+				       VerticalTextAlignment="Center" />
+
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ShareCommand}" />
+                </Grid.GestureRecognizers>
+            </Grid>
+
+            <StackLayout Grid.Row="0"
+			             Margin="0,0,15,40"
+			             HorizontalOptions="End"
+			             Orientation="Vertical"
+			             VerticalOptions="End">
+
+                <Frame Margin="10"
+				       Padding="0"
+				       BackgroundColor="Black"
+				       CornerRadius="25"
+				       HeightRequest="50"
+				       WidthRequest="50">
+
+                    <Label FontSize="25"
+					       HorizontalTextAlignment="Center"
+					       FontFamily="{StaticResource MaterialFontFamily}"
+					       Text="{x:Static font:IconFont.Heart}"
+					       TextColor="White"
+					       VerticalTextAlignment="Center" />
+
+
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding FavouriteCommand}" />
+                    </Frame.GestureRecognizers>
+                </Frame>
+
+                <Frame BackgroundColor="Black"
+				       CornerRadius="35"
+                       Padding="0"
+				       HeightRequest="70">
+
+                    <Label FontSize="29"
+					       HorizontalTextAlignment="Center"
+					       FontFamily="{StaticResource MaterialFontFamily}"
+					       Text="{x:Static font:IconFont.CartOutline}"
+					       TextColor="White"
+					       VerticalTextAlignment="Center" />
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OrderCommand}" />
+                    </Frame.GestureRecognizers>
+                </Frame>
+
+            </StackLayout>
+
+            <pancakeView:PancakeView Grid.Row="1"
+			                         Margin="0,-23,0,0"
+			                         CornerRadius="30, 30, 0, 0">
+                <Grid x:Name="BodyGrid" BackgroundColor="White">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Grid x:Name="ProductNameGrid" Grid.Row="0" Margin="0,10,0,0">
+                        <Label Margin="15,19,0,0"
+						       FontFamily="{StaticResource RobotoBold}"
+						       FontSize="25"
+						       LineBreakMode="WordWrap"
+						       Text="{Binding Product.Name}"
+						       TextColor="Black" />
+
+                        <StackLayout Margin="0,10,15,0"
+						             HorizontalOptions="End"
+						             Orientation="Vertical"
+						             Spacing="0">
+                            <Label Margin="15,10,0,0"
+							       FontFamily="{StaticResource RobotoBold}"
+							       FontSize="22"
+							       Text="{Binding Product.Price}"
+							       TextColor="Black" />
+                        </StackLayout>
+                    </Grid>
+
+                    <Grid Grid.Row="1">
+                        <Label x:Name="DescriptionLabel"
+						       Margin="15,0,15,0"
+						       FontFamily="{StaticResource RobotoLight}"
+						       MaxLines="6"
+						       Text="{Binding Product.Description}"
+						       TextColor="Black">
+                        </Label>
+                    </Grid>
+
+                    <StackLayout Orientation="Vertical"
+                                 Grid.Row="2" 
+                                 Margin="0,40,0,10"
+                                 Spacing="0">
+
+                        <Label Text="Images"
+                               Margin="15,0,0,0"
+                               TextColor="Black"
+                               FontFamily="{StaticResource RobotoBold}"/>
+
+                        <CollectionView 
+                                    ItemsSource="{Binding Product.Images}"
+                                    HeightRequest="150"
+					                Margin="15,10,15,0">
+                            <CollectionView.ItemsLayout>
+                                <GridItemsLayout Span="1" 
+                                                 VerticalItemSpacing="0" 
+                                                 HorizontalItemSpacing="0"
+												 Orientation="Horizontal"/>
+                            </CollectionView.ItemsLayout>
+
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <forms:CachedImage Margin="3,0,3,0" DownsampleUseDipUnits="True"
+                                                   Source="{Binding Source}" />
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+
+                        <StackLayout HeightRequest="200"/>
+                        <StackLayout HeightRequest="200"/>
+                        <StackLayout HeightRequest="200"/>
+                        <StackLayout HeightRequest="200"/>
+                    </StackLayout>
+                </Grid>
+            </pancakeView:PancakeView>
+
+            <Frame x:Name="UpFrame"
+			       Grid.Row="1"
+			       Margin="0,0,15,10"
+			       Padding="10"
+			       BackgroundColor="Black"
+			       CornerRadius="30"
+			       HeightRequest="35"
+			       HorizontalOptions="End"
+			       Scale="0"
+			       VerticalOptions="End"
+			       WidthRequest="35">
+
+                <Label Text="Up"
+                       TextColor="White"
+                       VerticalTextAlignment="Center"
+                       HorizontalOptions="Center"/>
+
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="UpFrameTapGestureRecognizer_OnTapped" />
+                </Frame.GestureRecognizers>
+            </Frame>
+
+
+        </Grid>
+
+    </ScrollView>
+</ContentPage>

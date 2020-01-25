@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:XFChallenge3.Converters"
+             mc:Ignorable="d"
+             x:Class="XFChallenge3.App">
+    <Application.Resources>
+		<ResourceDictionary>
+
+            <OnPlatform x:Key="RobotoBold" x:TypeArguments="x:String">
+                <On Platform="iOS" Value="Roboto Bold" />
+                <On Platform="Android" Value="Roboto-Bold.ttf#Roboto" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="RobotoLight" x:TypeArguments="x:String">
+                <On Platform="iOS" Value="Roboto Light" />
+                <On Platform="Android" Value="Roboto-Light.ttf#Roboto Light" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="RobotoMedium" x:TypeArguments="x:String">
+                <On Platform="iOS" Value="Roboto Medium" />
+                <On Platform="Android" Value="Roboto-Medium.ttf#Roboto Medium" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="RobotoBlack" x:TypeArguments="x:String">
+                <On Platform="iOS" Value="Roboto Black" />
+                <On Platform="Android" Value="Roboto-Regular.ttf#Roboto Black" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="RobotoRegular" x:TypeArguments="x:String">
+                <On Platform="iOS" Value="Roboto" />
+                <On Platform="Android" Value="Roboto-Regular.ttf#Roboto" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="MaterialFontFamily" x:TypeArguments="x:String">
+                <On Platform="iOS" Value="Material Design Icons" />
+                <On Platform="Android" Value="materialdesignicons.ttf#Material Design Icons" />
+            </OnPlatform>
+
+            <converters:ItemsLayoutConverter x:Key="ItemsLayoutConverter"/>
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

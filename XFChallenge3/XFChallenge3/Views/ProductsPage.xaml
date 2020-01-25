@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             mc:Ignorable="d"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:viewModels="clr-namespace:XFChallenge3.ViewModels"
+             xmlns:icons="clr-namespace:XFChallenge3.Helpers"
+             x:Class="XFChallenge3.Views.ProductsPage"
+             ios:Page.UseSafeArea="true"
+             x:Name="Root">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="LayoutSwitchLabelStyle" TargetType="Label">
+                <Setter Property="VerticalTextAlignment" Value="Center"/>
+                <Setter Property="HorizontalTextAlignment" Value="Center"/>
+                <Setter Property="TextColor" Value="Black"/>
+                <Setter Property="HeightRequest" Value="30"/>
+                <Setter Property="WidthRequest" Value="30"/>
+                <Setter Property="FontFamily" Value="{StaticResource MaterialFontFamily}"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.BindingContext>
+        <viewModels:ProductsViewModel/>
+    </ContentPage.BindingContext>
+
+    <Grid Grid.Row="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid  Grid.Row="0"
+               Margin="{OnPlatform iOS='0,15,0,0', Android='0,30,0,0'}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Column="0"
+                   Text="Products"
+                   VerticalTextAlignment="Center"
+                   Margin="10,0,0,0"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   TextColor="Black"
+                   FontFamily="{StaticResource RobotoBold}"/>
+
+            <StackLayout Orientation="Horizontal"
+                         Grid.Column="1" 
+				             Margin="0,0,10,0" 
+				             HorizontalOptions="End"
+				             Spacing="5">
+
+                <Label FontSize="20"
+                       TextColor="Black"
+                           VerticalTextAlignment="Center"
+                       FontFamily="{StaticResource MaterialFontFamily}"
+						       x:Name="LayoutSwitchLabelGrid"
+						       Text="{x:Static icons:IconFont.ViewGrid}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizerGrid_Tapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
+
+                <Label FontSize="25" 
+                           VerticalTextAlignment="Center"
+                       TextColor="Black"                     
+                          FontFamily="{StaticResource MaterialFontFamily}"
+						       x:Name="LayoutSwitchLabelList"
+						       Text="{x:Static icons:IconFont.ViewStream}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizerLinear_Tapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
+
+            </StackLayout>
+        </Grid>
+        
+        <CollectionView ItemsSource="{Binding Products}"
+                        x:Name="CollectionViewProducts"
+                        Grid.Row="1"
+                        Margin="10,0,10,0">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="5"
+                          x:Name="ContainerGrid"
+						  Padding="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <forms:CachedImage x:Name="ProductImage"
+										   Aspect="AspectFill"
+                                           HeightRequest="{Binding Source={x:Reference CollectionViewProducts}, Path=ItemsLayout, Converter={StaticResource ItemsLayoutConverter}}"
+										   Source="{Binding Images[0].Source}"
+										   DownsampleUseDipUnits="True"
+										   FadeAnimationEnabled="True" />
+
+                        <Grid Padding="3" 
+                               Grid.Row="0"
+		                     Margin="0,0,0,15"
+                               VerticalOptions="End" 
+                                  HorizontalOptions="Start"
+                              BackgroundColor="Red"
+                              IsVisible="{Binding Sale}">
+                            <Label FontFamily="{StaticResource RobotoBold}"
+			                        FontSize="12"
+			                        HorizontalTextAlignment="Center"
+			                        HorizontalOptions="Center"
+			                        Text="SALE"
+			                        TextColor="White"
+			                        VerticalOptions="Center"
+			                        VerticalTextAlignment="Center" />       
+                        </Grid>
+
+                        <Grid Margin="0,0,0,15"
+							  Padding="3"
+							  BackgroundColor="White"
+							  HorizontalOptions="End"
+							  VerticalOptions="End">
+                            <Label FontSize="12"
+								   HorizontalTextAlignment="Center"
+								   Text="NEW"
+                                   FontFamily="{StaticResource RobotoBold}"
+								   TextColor="Black"
+								   VerticalTextAlignment="Center" />
+                        </Grid>
+
+                        <Grid Grid.Row="1"
+							  Padding="0"
+							  HeightRequest="130"
+							  RowSpacing="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Row="0"
+								   FontSize="16"
+								   LineBreakMode="TailTruncation"
+								   Text="{Binding Name}"
+                                   FontFamily="{StaticResource RobotoBold}"
+								   TextColor="Black" />
+
+                            <Label Grid.Row="1"
+								   LineBreakMode="TailTruncation"
+								   MaxLines="4"
+								   Text="{Binding Description}"
+                                   FontFamily="{StaticResource RobotoLight}"
+								   TextColor="Black" />
+
+                            <Label Grid.Row="2"
+								   Margin="0,5,0,0"
+                                   FontFamily="{StaticResource RobotoBold}"
+								   Text="{Binding Price}"
+								   TextColor="Black" />
+
+                            <StackLayout x:Name="StackLayoutSales"
+										 Grid.Row="2"
+										 IsVisible="{Binding Sale}"
+										 Orientation="Horizontal"
+										 Spacing="10">
+
+                                <Label Margin="0,5,0,0"
+									   Text="{Binding Price}"
+                                       TextColor="Black"
+                                       FontFamily="{StaticResource RobotoBold}"
+									   TextDecorations="Strikethrough" />
+
+                                <Label Margin="0,5,0,0"
+									   Text="{Binding SalePrice}"
+                                       FontFamily="{StaticResource RobotoBold}"
+									   TextColor="Red" />
+                            </StackLayout>
+                        </Grid>
+
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={x:Reference Root}, Path=BindingContext.ProductSelectedCommand}"
+                                                  CommandParameter="{Binding}"/>
+                        </Grid.GestureRecognizers>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical"  
+                                 VerticalItemSpacing="10"
+                                 HorizontalItemSpacing="10"
+                                 Span="2"/>
+            </CollectionView.ItemsLayout>
+        </CollectionView>
+    </Grid>
+
+</ContentPage>
